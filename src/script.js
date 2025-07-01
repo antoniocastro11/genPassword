@@ -40,3 +40,9 @@ function generatePassword() {
 
   document.getElementById("result").innerText = password;
 }
+
+const lengthInput = document.getElementById("length");
+
+lengthInput.addEventListener("input", function() {
+  this.value = this.value.replace(/\D/g, "");
+});
