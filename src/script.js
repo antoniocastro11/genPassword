@@ -1,5 +1,17 @@
 function generatePassword() {
-  const length = document.getElementById("length").value;
+  const lengthInput = document.getElementById("length");
+  let length = parseInt(lengthInput.value); 
+  const min = parseInt(lengthInput.min);
+  const max = parseInt(lengthInput.max);
+
+  if (length > max) {
+    length = max;
+    lengthInput.value = max;
+  } else if (length < min) {
+    length = min;
+    lengthInput.value = min;
+  }
+
   const useUpper = document.getElementById("uppercase").checked;
   const useLower = document.getElementById("lowercase").checked;
   const useNumbers = document.getElementById("numbers").checked;
