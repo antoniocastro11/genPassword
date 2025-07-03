@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerador de Senhas</title>
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <h2>Gerador de Senhas</h2>
+        <h2>Gerador de Senhas</h2>
 
-      <label for="length">Tamanho:</label>
-      <input type="number" id="length" min="6" max="32" value="12" />
+        <div class="password-length-container">
+            <label for="length">Tamanho da senha:</label>
+            <input type="number" id="length" min="6" max="32" value="12" />
+        </div>
 
-      <div class="options">
-        <label><input type="checkbox" id="uppercase" checked /> Letras maiúsculas</label><br />
-        <label><input type="checkbox" id="lowercase" checked /> Letras minúsculas</label><br />
-        <label><input type="checkbox" id="numbers" checked /> Números</label><br />
-        <label><input type="checkbox" id="symbols" /> Símbolos</label>
-      </div>
+        <div class="options">
+            <label><input type="checkbox" id="uppercase" checked /> Maiúsculas</label>
+            <label><input type="checkbox" id="lowercase" checked /> Minúsculas</label>
+            <label><input type="checkbox" id="numbers" checked /> Números</label>
+            <label><input type="checkbox" id="symbols" /> Símbolos</label>
+        </div>
 
-      <button onclick="generatePassword()">Gerar Senha</button>
+        <button class="generate-btn" onclick="generatePassword()">Gerar Senha</button>
+        <p id="feedback-message" class="feedback"></p>
 
-      <div class="result-container">
-        <span class="result" id="result"></span>
-        <button id="copy-button" style="display: none;">Copiar</button>
-      </div>
-      <p id="password-strength"></p>
-      <p id="feedback-message" class="feedback"></p>
-      <div id="security-tips-container"></div>
+        <div id="password-details" class="hidden">
+            <div class="result-container">
+                <span id="result"></span>
+                <button id="copy-button">Copiar</button>
+            </div>
+            <p id="password-strength"></p>
+        </div>
+
+        <div id="security-tips-container" class="security-tips"></div>
     </div>
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
