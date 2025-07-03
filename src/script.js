@@ -1,30 +1,27 @@
-// Armazena as senhas geradas para poder exportá-las depois.
-let generatedPasswords = [];
-
 /**
- * Obtém e valida o comprimento da senha com base nos limites do input HTML.
+ * obtém e valida o comprimento da senha com base nos limites mínimo e máximo.
  * @returns {number} Comprimento ajustado da senha.
  */
 function getPasswordLength() {
   const lengthInput = document.getElementById("length");
-  let length = parseInt(lengthInput.value, 10);
-  const min = parseInt(lengthInput.min, 10);
-  const max = parseInt(lengthInput.max, 10);
+  let length = parseInt(lengthInput.value);
+  const min = parseInt(lengthInput.min);
+  const max = parseInt(lengthInput.max);
 
-  // Garante que o comprimento esteja dentro dos limites min/max definidos no HTML
-  if (isNaN(length) || length < min) {
-    length = min;
-    lengthInput.value = min;
-  } else if (length > max) {
+  if (length > max) {
     length = max;
     lengthInput.value = max;
+  } else if (length < min) {
+    length = min;
+    lengthInput.value = min;
   }
+
   return length;
 }
 
 /**
- * Monta a string de caracteres possíveis com base nas opções selecionadas.
- * @returns {string} O conjunto de caracteres disponíveis para gerar a senha.
+ * obtém as preferências de caractere marcadas pelo usuário.
+ * @returns {string} pool de caracteres permitidos.
  */
 function getCharacterPool() {
   const useUpper = document.getElementById("uppercase").checked;
@@ -47,10 +44,10 @@ function getCharacterPool() {
 }
 
 /**
- * Gera uma única senha aleatória.
- * @param {number} length - Comprimento da senha.
- * @param {string} pool - Conjunto de caracteres a serem usados.
- * @returns {string} A senha gerada.
+ * gera uma senha com base no pool de caracteres e comprimento.
+ * @param {number} length - Comprimento desejado da senha.
+ * @param {string} pool - pool de caracteres permitidos.
+ * @returns {string} senha gerada.
  */
 function generateRandomPassword(length, pool) {
   let password = "";
@@ -61,53 +58,65 @@ function generateRandomPassword(length, pool) {
   return password;
 }
 
-/**
- * Função principal que gera 3 senhas e as exibe na tela.
- */
 function generatePassword() {
+/**
+ * exibe a senha gerada e controla visibilidade do botão de cópia.
+ */
   const length = getPasswordLength();
   const pool = getCharacterPool();
   const resultEl = document.getElementById("result");
+  const copyBtn = document.getElementById("copy-button");
+  const feedbackEl = document.getElementById("feedback-message");
 
-  generatedPasswords = []; // Limpa o array de senhas antigas
-  let displayText = "";
+  feedbackEl.innerText = "";
 
   if (pool.length === 0) {
-    displayText = "Selecione ao menos um tipo de caractere!";
+    resultEl.innerText = "Selecione pelo menos uma opção!";
+    copyBtn.style.display = "none";
   } else {
-    // Loop para gerar as 3 senhas
-    for (let i = 0; i < 3; i++) {
-      const newPassword = generateRandomPassword(length, pool);
-      generatedPasswords.push(newPassword);
-      // Formata o texto para exibição com quebra de linha
-      displayText += `Senha ${i + 1}: ${newPassword}\n`;
-    }
+    const password = generateRandomPassword(length, pool);
+    resultEl.innerText = password;
+    copyBtn.style.display = "block";
   }
-
-  resultEl.innerText = displayText.trim(); // .trim() remove a última quebra de linha
 }
 
-/**
- * Exporta as senhas geradas para um arquivo .txt.
+
+function copyPasswordToClipboard() {
+  /*
+ * copia a senha gerada para a área de transferência.
  */
-function exportPasswords() {
-  if (generatedPasswords.length === 0) {
-    alert("Por favor, gere as senhas antes de exportar.");
+  const resultEl = document.getElementById("result");
+  const feedbackEl = document.getElementById("feedback-message");
+  const passwordToCopy = resultEl.innerText;
+
+  if (!passwordToCopy || passwordToCopy === "Selecione pelo menos uma opção!") {
     return;
   }
 
-  // Cria um "Blob", que é um objeto semelhante a um arquivo
-  const blob = new Blob([generatedPasswords.join("\n")], {
-    type: "text/plain",
+  navigator.clipboard.writeText(passwordToCopy).then(() => {
+    feedbackEl.innerText = "Senha copiada com sucesso!";
+    setTimeout(() => feedbackEl.innerText = "", 3000);
+  }).catch(err => {
+    feedbackEl.innerText = "Falha ao copiar!";
+    console.error("Erro ao copiar a senha: ", err);
   });
-
-  // Cria um link temporário para iniciar o download
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "senhas_geradas.txt";
-
-  // Simula o clique no link para baixar o arquivo e depois o remove
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
 }
+
+
+function setupEventListeners() {
+  /*
+ * inicializa os eventos de escuta para inputs e botões.
+ */
+  const copyBtn = document.getElementById("copy-button");
+  const lengthInput = document.getElementById("length");
+
+  copyBtn.addEventListener("click", copyPasswordToClipboard);
+
+  lengthInput.addEventListener("input", function () {
+    // remove qualquer caractere que não seja número
+    this.value = this.value.replace(/\D/g, "");
+  });
+}
+
+// Inicialização
+setupEventListeners();

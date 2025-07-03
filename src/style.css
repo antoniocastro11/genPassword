@@ -37,7 +37,6 @@ button {
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  margin: 5px;
 }
 
 button:hover {
@@ -48,13 +47,37 @@ button:hover {
   font-weight: bold;
   font-size: 16px;
   color: #007bff;
-  /* Essencial para que as quebras de linha (\n) do JS sejam renderizadas */
-  white-space: pre-line;
-  /* Quebra senhas muito longas para não estourar o container */
   word-break: break-all;
-  margin-top: 20px;
+  padding: 10px;
+  flex-grow: 1;
+}
+
+.result-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: #e9ecef;
   border-radius: 5px;
-  padding: 10px;
+  margin-top: 20px;
   border: 1px solid #ced4da;
+}
+
+#copy-button {
+  background-color: #6c757d;
+  padding: 10px;
+  flex-shrink: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#copy-button:hover {
+  background-color: #5a6268;
+}
+
+.feedback {
+  color: #28a745;
+  font-weight: bold;
+  margin-top: 10px;
+  height: 20px;
+  font-size: 14px;
 }
