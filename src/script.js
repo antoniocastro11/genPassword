@@ -1,3 +1,5 @@
+let generatedPasswords = [];
+
 function generatePassword() {
   const length = document.getElementById("length").value;
   const useUpper = document.getElementById("uppercase").checked;
@@ -16,7 +18,7 @@ function generatePassword() {
   if (useNumbers) charPool += numberChars;
   if (useSymbols) charPool += symbolChars;
 
-  let generatedPasswords = [];
+  generatedPasswords = [];
   let displayText = "";
 
   if (charPool.length === 0) {
@@ -31,15 +33,22 @@ function generatePassword() {
       generatedPasswords.push(password);
       displayText += `Senha ${j + 1}: ${password}\n`;
     }
-
-    const blob = new Blob([generatedPasswords.join("\n")], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "senhas.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   }
 
   document.getElementById("result").innerText = displayText;
+}
+
+function exportPasswords() {
+  if (generatedPasswords.length === 0) {
+    alert("Gere as senhas antes de exportar.");
+    return;
+  }
+
+  const blob = new Blob([generatedPasswords.join("\n")], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "senhas.txt";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
