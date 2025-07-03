@@ -22,12 +22,14 @@
 
       <button onclick="generatePassword()">Gerar Senha</button>
 
-      <div class="result" id="result"></div>
-      
-      <p id="password-strength"></p> 
-      <div id="security-tips-container"></div>
+      <div class="result-container">
+        <span class="result" id="result"></span>
+        <button id="copy-button" style="display: none;">Copiar</button>
       </div>
-
+      <p id="password-strength"></p>
+      <p id="feedback-message" class="feedback"></p>
+      <div id="security-tips-container"></div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
