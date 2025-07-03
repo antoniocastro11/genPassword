@@ -91,6 +91,8 @@ function displayPasswordStrength(password, useUpper, useLower, useNumbers, useSy
   document.getElementById("password-strength").innerText = `Nível da senha: ${strength}`;
 }
 
+let lastTipIndex = -1;
+
 function displaySecurityTips() {
   let tipsContainer = document.getElementById("security-tips-container");
   if (!tipsContainer) {
@@ -102,7 +104,12 @@ function displaySecurityTips() {
 
   tipsContainer.innerHTML = "";
 
-  const randomIndex = Math.floor(Math.random() * securityTips.length);
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * securityTips.length);
+  } while (securityTips.length > 1 && randomIndex === lastTipIndex);
+
+  lastTipIndex = randomIndex;
   const randomTip = securityTips[randomIndex];
 
   const p = document.createElement("p");
