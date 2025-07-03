@@ -29,9 +29,13 @@
 
       <button onclick="generatePassword()">Gerar Senha</button>
 
-      <div class="result" id="result"></div>
-    </div>
+      <div class="result-container">
+        <span class="result" id="result"></span>
+        <button id="copy-button" style="display: none;">Copiar</button>
+      </div>
+      <p id="feedback-message" class="feedback"></p>
 
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
