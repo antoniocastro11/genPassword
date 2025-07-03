@@ -45,10 +45,16 @@ button:hover {
 }
 
 .result {
-  margin-top: 20px;
   font-weight: bold;
   font-size: 16px;
   color: #007bff;
+  /* Essencial para que as quebras de linha (\n) do JS sejam renderizadas */
   white-space: pre-line;
-  word-break: break-word;
+  /* Quebra senhas muito longas para não estourar o container */
+  word-break: break-all;
+  margin-top: 20px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #ced4da;
 }
