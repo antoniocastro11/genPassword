@@ -1,5 +1,17 @@
 function generatePassword() {
-  const length = document.getElementById("length").value;
+  const lengthInput = document.getElementById("length");
+  let length = parseInt(lengthInput.value);
+  const min = parseInt(lengthInput.min);
+  const max = parseInt(lengthInput.max);
+
+  if (length > max) {
+    length = max;
+    lengthInput.value = max;
+  } else if (length < min) {
+    length = min;
+    lengthInput.value = min;
+  }
+
   const useUpper = document.getElementById("uppercase").checked;
   const useLower = document.getElementById("lowercase").checked;
   const useNumbers = document.getElementById("numbers").checked;
@@ -20,7 +32,7 @@ function generatePassword() {
   const resultEl = document.getElementById("result");
   const copyBtn = document.getElementById("copy-button");
   const feedbackEl = document.getElementById("feedback-message");
-  
+
   feedbackEl.innerText = "";
 
   if (charPool.length === 0) {
@@ -45,7 +57,7 @@ copyBtn.addEventListener("click", () => {
   const passwordToCopy = resultEl.innerText;
 
   if (!passwordToCopy || passwordToCopy === "Selecione pelo menos uma opção!") {
-    return; 
+    return;
   }
 
   navigator.clipboard.writeText(passwordToCopy).then(() => {
@@ -58,4 +70,10 @@ copyBtn.addEventListener("click", () => {
     feedbackEl.innerText = "Falha ao copiar!";
     console.error("Erro ao copiar a senha: ", err);
   });
+});
+
+const lengthInput = document.getElementById("length");
+
+lengthInput.addEventListener("input", function () {
+  this.value = this.value.replace(/\D/g, "");
 });
