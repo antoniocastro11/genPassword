@@ -1,83 +1,158 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 50px;
-  height: 100vh;
-  margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 20px;
+    min-height: 100vh;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .container {
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
 }
 
 h2 {
-  margin-bottom: 20px;
-  color: #333;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.password-length-container {
+    margin-bottom: 20px;
+}
+
+.password-length-container label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.password-length-container input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
 }
 
 .options {
-  margin: 15px 0;
-  text-align: left;
-  font-size: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    margin: 20px 0;
+    text-align: left;
 }
 
-button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
+.options label {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
 }
 
-button:hover {
-  background-color: #0056b3;
+.options input {
+    margin-right: 8px;
 }
 
-.result {
-  font-weight: bold;
-  font-size: 16px;
-  color: #007bff;
-  word-break: break-all;
-  padding: 10px;
-  flex-grow: 1;
+.generate-btn {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.generate-btn:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+#password-details {
+    margin-top: 20px;
 }
 
 .result-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #e9ecef;
-  border-radius: 5px;
-  margin-top: 20px;
-  border: 1px solid #ced4da;
+    display: flex;
+    align-items: center;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    margin-bottom: 10px;
+}
+
+#result {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+    word-break: break-all;
+    padding: 12px;
+    flex-grow: 1;
+    text-align: left;
 }
 
 #copy-button {
-  background-color: #6c757d;
-  padding: 10px;
-  flex-shrink: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: background-color 0.2s;
 }
 
 #copy-button:hover {
-  background-color: #5a6268;
+    background-color: #5a6268;
 }
 
 .feedback {
-  color: #28a745;
-  font-weight: bold;
-  margin-top: 10px;
-  height: 20px;
-  font-size: 14px;
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+    height: 20px;
+    font-size: 14px;
+}
+
+#password-strength {
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.strength-baixo {
+    color: #dc3545;
+    background-color: #f8d7da;
+}
+.strength-medio {
+    color: #ff8c00;
+    background-color: #fff3cd;
+}
+.strength-alto {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.security-tips {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+    color: #6c757d;
+    font-size: 13px;
 }
