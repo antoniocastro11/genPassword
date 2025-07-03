@@ -1,4 +1,8 @@
-function generatePassword() {
+/**
+ * obtém e valida o comprimento da senha com base nos limites mínimo e máximo.
+ * @returns {number} Comprimento ajustado da senha.
+ */
+function getPasswordLength() {
   const lengthInput = document.getElementById("length");
   let length = parseInt(lengthInput.value);
   const min = parseInt(lengthInput.min);
@@ -12,6 +16,14 @@ function generatePassword() {
     lengthInput.value = min;
   }
 
+  return length;
+}
+
+/**
+ * obtém as preferências de caractere marcadas pelo usuário.
+ * @returns {string} pool de caracteres permitidos.
+ */
+function getCharacterPool() {
   const useUpper = document.getElementById("uppercase").checked;
   const useLower = document.getElementById("lowercase").checked;
   const useNumbers = document.getElementById("numbers").checked;
@@ -22,36 +34,57 @@ function generatePassword() {
   const numberChars = "0123456789";
   const symbolChars = "!@#$%^&*()_+[]{}|;:,.<>?";
 
-  let charPool = "";
-  if (useUpper) charPool += upperChars;
-  if (useLower) charPool += lowerChars;
-  if (useNumbers) charPool += numberChars;
-  if (useSymbols) charPool += symbolChars;
+  let pool = "";
+  if (useUpper) pool += upperChars;
+  if (useLower) pool += lowerChars;
+  if (useNumbers) pool += numberChars;
+  if (useSymbols) pool += symbolChars;
 
+  return pool;
+}
+
+/**
+ * gera uma senha com base no pool de caracteres e comprimento.
+ * @param {number} length - Comprimento desejado da senha.
+ * @param {string} pool - pool de caracteres permitidos.
+ * @returns {string} senha gerada.
+ */
+function generateRandomPassword(length, pool) {
   let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * pool.length);
+    password += pool[randomIndex];
+  }
+  return password;
+}
+
+function generatePassword() {
+/**
+ * exibe a senha gerada e controla visibilidade do botão de cópia.
+ */
+  const length = getPasswordLength();
+  const pool = getCharacterPool();
   const resultEl = document.getElementById("result");
   const copyBtn = document.getElementById("copy-button");
   const feedbackEl = document.getElementById("feedback-message");
 
   feedbackEl.innerText = "";
 
-  if (charPool.length === 0) {
-    password = "Selecione pelo menos uma opção!";
+  if (pool.length === 0) {
+    resultEl.innerText = "Selecione pelo menos uma opção!";
     copyBtn.style.display = "none";
   } else {
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charPool.length);
-      password += charPool[randomIndex];
-    }
+    const password = generateRandomPassword(length, pool);
+    resultEl.innerText = password;
     copyBtn.style.display = "block";
   }
-
-  resultEl.innerText = password;
 }
 
-const copyBtn = document.getElementById("copy-button");
 
-copyBtn.addEventListener("click", () => {
+function copyPasswordToClipboard() {
+  /*
+ * copia a senha gerada para a área de transferência.
+ */
   const resultEl = document.getElementById("result");
   const feedbackEl = document.getElementById("feedback-message");
   const passwordToCopy = resultEl.innerText;
@@ -62,18 +95,28 @@ copyBtn.addEventListener("click", () => {
 
   navigator.clipboard.writeText(passwordToCopy).then(() => {
     feedbackEl.innerText = "Senha copiada com sucesso!";
-
-    setTimeout(() => {
-      feedbackEl.innerText = "";
-    }, 3000);
+    setTimeout(() => feedbackEl.innerText = "", 3000);
   }).catch(err => {
     feedbackEl.innerText = "Falha ao copiar!";
     console.error("Erro ao copiar a senha: ", err);
   });
-});
+}
 
-const lengthInput = document.getElementById("length");
 
-lengthInput.addEventListener("input", function () {
-  this.value = this.value.replace(/\D/g, "");
-});
+function setupEventListeners() {
+  /*
+ * inicializa os eventos de escuta para inputs e botões.
+ */
+  const copyBtn = document.getElementById("copy-button");
+  const lengthInput = document.getElementById("length");
+
+  copyBtn.addEventListener("click", copyPasswordToClipboard);
+
+  lengthInput.addEventListener("input", function () {
+    // remove qualquer caractere que não seja número
+    this.value = this.value.replace(/\D/g, "");
+  });
+}
+
+// Inicialização
+setupEventListeners();
