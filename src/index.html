@@ -14,16 +14,9 @@
       <input type="number" id="length" min="6" max="32" value="12" />
 
       <div class="options">
-        <label
-          ><input type="checkbox" id="uppercase" checked /> Letras
-          maiúsculas</label
-        ><br />
-        <label
-          ><input type="checkbox" id="lowercase" checked /> Letras
-          minúsculas</label
-        ><br />
-        <label><input type="checkbox" id="numbers" checked /> Números</label
-        ><br />
+        <label><input type="checkbox" id="uppercase" checked /> Letras maiúsculas</label><br />
+        <label><input type="checkbox" id="lowercase" checked /> Letras minúsculas</label><br />
+        <label><input type="checkbox" id="numbers" checked /> Números</label><br />
         <label><input type="checkbox" id="symbols" /> Símbolos</label>
       </div>
 
@@ -33,8 +26,9 @@
         <span class="result" id="result"></span>
         <button id="copy-button" style="display: none;">Copiar</button>
       </div>
+      <p id="password-strength"></p>
       <p id="feedback-message" class="feedback"></p>
-
+      <div id="security-tips-container"></div>
     </div>
     <script src="script.js"></script>
   </body>
